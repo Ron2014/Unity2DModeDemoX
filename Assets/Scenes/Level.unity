@@ -358,6 +358,78 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_Size: {x: 1, y: 2}
   m_Center: {x: 0, y: 0}
+--- !u!1 &271856159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100000, guid: 31792b77b8a754d9ca13d59011acb384, type: 2}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 271856160}
+  - 131: {fileID: 271856162}
+  - 114: {fileID: 271856161}
+  m_Layer: 1
+  m_Name: Joystick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &271856160
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400000, guid: 31792b77b8a754d9ca13d59011acb384, type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 271856159}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 2033762903}
+  m_RootOrder: 3
+--- !u!114 &271856161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11400000, guid: 31792b77b8a754d9ca13d59011acb384,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 271856159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfedc6c1b47c242338b1bb680f688bce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  touchPad: 0
+  touchZone:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  deadZone: 0
+  normalize: 0
+  position: {x: 0, y: 0}
+  tapCount: 0
+--- !u!131 &271856162
+GUITexture:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 13100000, guid: 31792b77b8a754d9ca13d59011acb384,
+    type: 2}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 271856159}
+  m_Enabled: 1
+  m_Texture: {fileID: 2800000, guid: 619d7162588d64ee9aaa5b06e5176cf7, type: 3}
+  m_Color: {r: .75373137, g: .75373137, b: .75373137, a: .345098048}
+  m_PixelInset:
+    serializedVersion: 2
+    x: 20
+    y: 20
+    width: 100
+    height: 100
+  m_LeftBorder: 0
+  m_RightBorder: 0
+  m_TopBorder: 0
+  m_BottomBorder: 0
 --- !u!1 &281859898
 GameObject:
   m_ObjectHideFlags: 0
@@ -2812,7 +2884,7 @@ GUITexture:
   m_PixelInset:
     serializedVersion: 2
     x: 10
-    y: 10
+    y: 150
     width: 84
     height: 70
   m_LeftBorder: 0
@@ -4074,6 +4146,14 @@ Prefab:
     - target: {fileID: 400000, guid: bc17612bc816d4f859110958e22d0a82, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: bc17612bc816d4f859110958e22d0a82, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 13100000, guid: bc17612bc816d4f859110958e22d0a82, type: 2}
+      propertyPath: m_PixelInset.y
+      value: 150
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bc17612bc816d4f859110958e22d0a82, type: 2}
@@ -8335,6 +8415,7 @@ Transform:
   - {fileID: 881603615}
   - {fileID: 335855071}
   - {fileID: 604767756}
+  - {fileID: 271856160}
   m_Father: {fileID: 0}
   m_RootOrder: 4
 --- !u!1 &2081843409
@@ -8383,6 +8464,7 @@ GameObject:
   - 114: {fileID: 2086931160}
   - 114: {fileID: 2086931167}
   - 82: {fileID: 2086931170}
+  - 114: {fileID: 2086931166}
   m_Layer: 9
   m_Name: hero
   m_TagString: Player
@@ -8523,6 +8605,27 @@ MonoBehaviour:
   - {fileID: 8300000, guid: ddd0ca15e5d0a42b98f08337c1690bb1, type: 3}
   tauntProbability: 50
   tauntDelay: 1
+--- !u!114 &2086931166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2086931158}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bd2386ff144c4392a78490c19491b1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  motor: {fileID: 0}
+  character: {fileID: 2086931159}
+  cursorPrefab: {fileID: 0}
+  joystickPrefab: {fileID: 271856159}
+  cameraSmoothing: .00999999978
+  cameraPreview: 2
+  cursorPlaneHeight: 0
+  cursorFacingCamera: 0
+  cursorSmallerWithDistance: 0
+  cursorSmallerWhenClose: 1
 --- !u!114 &2086931167
 MonoBehaviour:
   m_ObjectHideFlags: 0
