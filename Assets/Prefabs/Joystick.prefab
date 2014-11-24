@@ -43,11 +43,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6efbc9189a79f4c6a8fd15a49bb59229, type: 3}
+  m_Script: {fileID: 11500000, guid: 0a0c05527119646c2bb89d1e8cf20ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   touchPad: 0
   touchZone:
+    serializedVersion: 2
     x: 0
     y: 0
     width: 0
@@ -70,10 +71,10 @@ GUITexture:
   m_Color: {r: .75373137, g: .75373137, b: .75373137, a: .345098048}
   m_PixelInset:
     serializedVersion: 2
-    x: 27.1562195
-    y: 23.8668633
-    width: 100
-    height: 100
+    x: 20
+    y: 20
+    width: 300
+    height: 300
   m_LeftBorder: 0
   m_RightBorder: 0
   m_TopBorder: 0

@@ -2,12 +2,14 @@
 using System.Collections;
 
 public class PlayerControl : MonoBehaviour
-{
+{	
+	public GameObject joystickPrefab;
+	private Joystick joystickLeft = null;
+
 	[HideInInspector]
 	public bool facingRight = true;			// For determining which way the player is currently facing.
 	[HideInInspector]
 	public bool jump = false;				// Condition for whether the player should jump.
-
 
 	public float moveForce = 365f;			// Amount of force added to move the player left and right.
 	public float maxSpeed = 5f;				// The fastest the player can travel in the x axis.
@@ -20,7 +22,17 @@ public class PlayerControl : MonoBehaviour
 
 	private int tauntIndex;					// The index of the taunts array indicating the most recent taunt.
 	private Transform groundCheck;			// A position marking where to check if the player is grounded.
+
+//	private bool _grounded = false;
+//	private bool grounded{
+//		get { return _grounded; }
+//		set {
+//			Debug.Log(string.Format("grounded={0}", value));
+//			_grounded = value;
+//		}
+//	}
 	private bool grounded = false;			// Whether or not the player is grounded.
+
 	private Animator anim;					// Reference to the player's animator component.
 
 
@@ -29,24 +41,55 @@ public class PlayerControl : MonoBehaviour
 		// Setting up references.
 		groundCheck = transform.Find("groundCheck");
 		anim = GetComponent<Animator>();
+		
+		
+		#if (UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_WP_8_1 || UNITY_BLACKBERRY || UNITY_TIZEN) && !UNITY_EDITOR
+		if (joystickPrefab) {
+			// Create left joystick
+			GameObject go = Instantiate (joystickPrefab) as GameObject;
+			go.name = "Joystick Left";
+			joystickLeft = go.GetComponent<Joystick> ();
+
+			go = GameObject.Find("UI/ui_bombHUD");
+			GUITexture gui = go.GetComponent<GUITexture>();
+			gui.pixelInset = new Rect(gui.pixelInset.x, Screen.height - gui.pixelInset.height - 10, gui.pixelInset.width, gui.pixelInset.height);
+		}
+		#endif
 	}
 
 
 	void Update()
 	{
+		bool oldGrounded = grounded;
+
 		// The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
 		grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));  
 
 		// If the jump button is pressed and the player is grounded then the player should jump.
-		if(Input.GetButtonDown("Jump") && grounded)
-			jump = true;
+		if(joystickLeft!=null){
+			if(!oldGrounded && grounded){
+				joystickLeft.ResetJoystick();
+			}
+
+			if(joystickLeft.position.y>0.5f && grounded)
+				jump = true;
+
+		}else{
+			if(Input.GetButtonDown("Jump") && grounded)	
+				jump = true;
+		}
 	}
 
 
 	void FixedUpdate ()
 	{
 		// Cache the horizontal input.
-		float h = Input.GetAxis("Horizontal");
+		float h = 0;
+
+		if(joystickLeft!=null)
+			h = joystickLeft.position.x;
+		else
+			h = Input.GetAxis("Horizontal");
 
 		// The Speed animator parameter is set to the absolute value of the horizontal input.
 		anim.SetFloat("Speed", Mathf.Abs(h));
@@ -85,6 +128,7 @@ public class PlayerControl : MonoBehaviour
 
 			// Make sure the player can't jump again until the jump conditions from Update are satisfied.
 			jump = false;
+			if(joystickLeft!=null) joystickLeft.ResetJoystick();
 		}
 	}
 	
