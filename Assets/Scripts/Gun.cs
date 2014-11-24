@@ -4,7 +4,7 @@ using System.Collections;
 public class Gun : MonoBehaviour
 {
 	public GameObject joystickPrefab;
-	private Joystick joystickRight = null;
+	public Joystick joystickRight = null;
 	public float fireDelay = 0.5f;
 	public float lastFireTm = 0;
 

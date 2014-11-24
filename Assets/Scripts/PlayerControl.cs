@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour
 {	
 	public GameObject joystickPrefab;
-	private Joystick joystickLeft = null;
+	public Joystick joystickLeft = null;
 
 	[HideInInspector]
 	public bool facingRight = true;			// For determining which way the player is currently facing.
@@ -40,8 +40,7 @@ public class PlayerControl : MonoBehaviour
 	{
 		// Setting up references.
 		groundCheck = transform.Find("groundCheck");
-		anim = GetComponent<Animator>();
-		
+		anim = GetComponent<Animator>();		
 		
 		#if (UNITY_IPHONE || UNITY_ANDROID || UNITY_WP8 || UNITY_WP_8_1 || UNITY_BLACKBERRY || UNITY_TIZEN) && !UNITY_EDITOR
 		if (joystickPrefab) {

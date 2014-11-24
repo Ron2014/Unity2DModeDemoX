@@ -22,8 +22,24 @@ public class LayBombs : MonoBehaviour
 
 	void Update ()
 	{
+		bool layBomb = !bombLaid && bombCount > 0;
+		Vector3 pos = transform.position;
+
+		PlayerControl playerControl = GetComponent<PlayerControl>();
+		Gun gun = playerControl.GetComponentInChildren<Gun>();
+
+		if(playerControl.joystickLeft!=null){
+			int count = Input.touchCount;
+//			if(count>0){
+//				Vector2 posTouch = Input.GetTouch(count-1).position;
+//				pos = new Vector3(posTouch.x, posTouch.y, pos.z);
+//			}
+			layBomb &= (count>0) && (!playerControl.joystickLeft.IsFingerDown()) && (!gun.joystickRight.IsFingerDown());
+		}else
+			layBomb &= Input.GetButtonDown("Fire2");
+
 		// If the bomb laying button is pressed, the bomb hasn't been laid and there's a bomb to lay...
-		if(Input.GetButtonDown("Fire2") && !bombLaid && bombCount > 0)
+		if( layBomb )
 		{
 			// Decrement the number of bombs.
 			bombCount--;
@@ -32,10 +48,10 @@ public class LayBombs : MonoBehaviour
 			bombLaid = true;
 
 			// Play the bomb laying sound.
-			AudioSource.PlayClipAtPoint(bombsAway,transform.position);
+			AudioSource.PlayClipAtPoint(bombsAway, pos);
 
 			// Instantiate the bomb prefab.
-			Instantiate(bomb, transform.position, transform.rotation);
+			Instantiate(bomb, pos, transform.rotation);
 		}
 
 		// The bomb heads up display should be enabled if the player has bombs, other it should be disabled.
